@@ -15,8 +15,43 @@ class Student:
 
 class StudentManagementSystem:
 
+    def load_students(self):
+
+        try:
+            file = open("student.txt", "r")
+
+            for line in file:
+
+                data = line.strip().split(",")
+
+                student = Student(
+                    data[0],
+                    data[1],
+                    int(data[2])
+                )
+
+                self.students.append(student)
+
+            file.close()
+
+        except FileNotFoundError:
+            print("student.txt not found")
+
     def __init__(self):
-        self.students = []
+            self.students = []
+            self.load_students()
+
+    def save_students(self):
+
+        file = open("student.txt", "w")
+
+        for student in self.students:
+
+            file.write(
+                f"{student.student_id},{student.name},{student.semester}\n"
+            )
+
+        file.close()
 
     def add_student(self):
 
@@ -48,6 +83,7 @@ class StudentManagementSystem:
         student = Student(student_id, name, semester)
 
         self.students.append(student)
+        self.save_students()
         print("student Added Successfully")
 
     def view_student(self):
@@ -86,6 +122,7 @@ class StudentManagementSystem:
 
             if student.student_id == delete_id:
                 self.students.remove(student)
+                self.save_students()
                 found = True
                 break
 
@@ -104,6 +141,10 @@ class StudentManagementSystem:
             if student.student_id == update_id:
 
                 new_name = input("Enter new name:")
+                if new_name.strip() == "":
+                    print("Name cannot be empty")
+                    return
+                
                 try:
                     new_semester = int(input("Enter new semester:"))
 
@@ -115,12 +156,9 @@ class StudentManagementSystem:
                     print("Semester must be a number")
                     return
                 
-                student.name = new_name
-                if new_name.strip() == "":
-                    print("Name cannot be empty")
-                    return
-                
+                student.name = new_name    
                 student.semester = new_semester
+                self.save_students()
 
                 found = True
                 break
@@ -133,7 +171,12 @@ class StudentManagementSystem:
 
     def search_by_name(self):
 
-        search_name = input("Enter Namee:")
+        search_name = input("Enter Namee:").strip()
+
+        if search_name == "":
+            print("Name cannot be empty")
+            return
+        
 
         found = False
 
