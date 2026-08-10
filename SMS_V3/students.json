@@ -1,0 +1,22 @@
+[
+    {
+        "student_id": "101",
+        "name": "Kushal",
+        "semester": 5
+    },
+    {
+        "student_id": "102",
+        "name": "Subrat",
+        "semester": 5
+    },
+    {
+        "student_id": "103",
+        "name": "Tara Devi Gautam",
+        "semester": 5
+    },
+    {
+        "student_id": "104",
+        "name": "lamo",
+        "semester": 8
+    }
+]

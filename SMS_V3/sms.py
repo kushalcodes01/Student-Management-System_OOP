@@ -1,44 +1,45 @@
+import json
 from student import Student
 
 class StudentManagementSystem:
     def load_students(self):
-    
-            try:
-                file = open("student.txt", "r")
-    
-                for line in file:
-    
-                    data = line.strip().split(",")
-    
-                    student = Student(
-                        data[0],
-                        data[1],
-                        int(data[2])
-                    )
-    
-                    self.students.append(student)
-    
-                file.close()
-    
-            except FileNotFoundError:
-                print("student.txt not found")
-    
+
+        try:
+
+            file = open("students.json", "r")
+
+            data = json.load(file)
+
+            for item in data:
+
+                   student = Student(
+                        item["student_id"],
+                        item["name"],
+                        item["semester"]
+                   )
+
+                   self.students.append(student)
+            file.close()
+        except FileNotFoundError:
+             pass
+            
     def __init__(self):
         self.students = []
         self.load_students()
     
     def save_students(self):
 
-        file = open("student.txt", "w")
-    
+        data = []
+
         for student in self.students:
-    
-            file.write(
-                f"{student.student_id},{student.name},{student.semester}\n"
-            )
-    
+              data.append(student.to_dict())
+
+        file = open("students.json", "w")
+
+        json.dump(data, file, indent=4)
+
         file.close()
-    
+        
     def add_student(self):
     
         student_id = input("Enter the Id:")
