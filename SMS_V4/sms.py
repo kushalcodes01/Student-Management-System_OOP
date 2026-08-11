@@ -88,3 +88,50 @@ class StudentManagementSystem:
 
         else:
             print("Student Not Found")
+
+    def update_students(self):
+
+        update_id = input("Enter ID to udate:")
+
+        new_name = input("Enter new name:")
+
+        try:
+            new_semester = int(input("Enter new semester:"))
+        except ValueError:
+            print("Semester must be a number")
+            return
+
+        self.cursor.execute(
+            """
+        UPDATE students
+        SET name = ?, semester = ?
+        WHERE student_id = ?
+        """,
+        (new_name, new_semester, update_id  )
+        )
+
+        self.conn.commit()
+
+        if self.cursor.rowcount > 0:
+            print("Student Update successfully")
+
+        else:
+            print("Student not found")
+
+    def delete_student(self):
+
+        delete_id = input("enter id to delete:")
+
+        self.cursor.execute(
+            "DELETE FROM students WHERE student_id = ?",
+            (delete_id,)
+        )
+
+        self.conn.commit()
+
+        if self.cursor.rowcount > 0 :
+            print("Successfully Deleted")
+
+        else:
+            print("Student Not founnd")
+

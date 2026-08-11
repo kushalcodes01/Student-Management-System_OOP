@@ -8,7 +8,9 @@ while True:
     print("1. Add Student")
     print("2. View Students")
     print("3. Search Students")
-    print("4. Exit")
+    print("4. Update Students")
+    print("5. Delete Students")
+    print("6. Exit")
 
     choice = input("Enter Choice: ")
 
@@ -22,6 +24,12 @@ while True:
         sms.search_student()
 
     elif choice == "4":
+        sms.update_students()
+
+    elif choice == "5":
+        sms.delete_student()
+
+    elif choice == "6":
         print("Goodbye")
         break
 
